@@ -24,6 +24,30 @@ public class Game {
         return new GameBuilder();
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public int getCurrentPlayerIdx() {
+        return currentPlayerIdx;
+    }
+
+    public List<Move> getMoves() {
+        return moves;
+    }
+
+    public void printBoard(){
+        this.board.printBoard();
+    }
+
     public static class GameBuilder {
         private Board board;
         private List<Player> players;

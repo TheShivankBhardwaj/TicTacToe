@@ -5,11 +5,12 @@ import machine_coding.tictaktoe.models.*;
 
 import java.util.*;
 
-//THIS WILL ACT AS A CLIENT AND WILL WORK WITH CONTROLLER CLASS
+//THIS WILL ACT AS A CLIENT(FRONTEND) AND WILL WORK WITH CONTROLLER CLASS
 public class TicTacToe {
     public static void main(String[] args) {
         GameController gameController = new GameController();
 
+//PLAYERS LIST CREATED
         //HUMAN PLAYERS
         Scanner scanner = new Scanner(System.in);
         System.out.println("How many human players?");
@@ -66,7 +67,26 @@ public class TicTacToe {
             }
             symbolSet.add(symbol);
             players.add(new BotPlayer("Bot"+(i+1), new Symbol(symbol), botLevel));
+        }
+        Game game;
+        try{
+            game = gameController.createGame(players);
+        } catch (Exception e){
+            System.out.println("Error while creating the game : "+e.getMessage());
+            return;
+        }
 
+        //START PLAYING THE GAME
+        //WHILE THE GameStatus IS IN PROGRESS
+        // 1. PRINT THE BOARD.
+        // 2. MAKE A MOVE.
+        //      2.1 CHECK IF THE PLAYER HAS WON OR NOT.
+        //          2.1.1 IF THE PLAYER WINS SET THE GameStatus TO ENDED
+        //          2.1.2 ELSE IF DRAW , SET THE GameStatus TO DRAW
+        //          2.1.3 ELSE PASS THE CHANCE TO THE NEXT PLAYER, AND CAPTURE THE MOVE.
+
+        while (gameController.getGameStatus(game) == GameStatus.IN_PROGRESS){
+            gameController.printBoard(game);
         }
     }
 }
