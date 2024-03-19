@@ -7,11 +7,11 @@ public class Symbol {
         this.s = s;
     }
 
-    public char getS() {
+    public char getSymbol() {
         return s;
     }
 
-    public void setS(char s) {
+    public void setSymbol(char s) {
         this.s = s;
     }
 }

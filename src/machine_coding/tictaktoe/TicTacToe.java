@@ -7,6 +7,7 @@ import java.util.*;
 
 //THIS WILL ACT AS A CLIENT(FRONTEND) AND WILL WORK WITH CONTROLLER CLASS
 public class TicTacToe {
+
     public static void main(String[] args) {
         GameController gameController = new GameController();
 
@@ -86,6 +87,16 @@ public class TicTacToe {
         //          2.1.3 ELSE PASS THE CHANCE TO THE NEXT PLAYER, AND CAPTURE THE MOVE.
 
         while (gameController.getGameStatus(game) == GameStatus.IN_PROGRESS){
+            gameController.printBoard(game);
+
+            gameController.makeMove(game);
+        }
+        GameStatus gameStatus = gameController.getGameStatus(game);
+        if(gameStatus.equals(GameStatus.ENDED)){
+            //This means someone has won;
+        }
+        else {
+            System.out.println("This Game Has Drawn");
             gameController.printBoard(game);
         }
     }

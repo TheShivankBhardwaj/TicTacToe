@@ -1,5 +1,6 @@
 package machine_coding.tictaktoe.models;
 
+import javafx.util.Pair;
 import machine_coding.tictaktoe.exceptions.BotCountExceededException;
 
 import java.util.ArrayList;
@@ -46,6 +47,41 @@ public class Game {
 
     public void printBoard(){
         this.board.printBoard();
+    }
+
+    public void makeMove(){
+        Player player = this.players.get(currentPlayerIdx);
+        Pair<Integer, Integer> rowCol = player.makeMove();
+        while (!this.board.checkIfCellIsUnoccupied(rowCol.getKey(), rowCol.getValue())){
+            if(player instanceof HumanPlayer){
+                System.out.println("Please make a move on different cell");
+            }
+            rowCol=player.makeMove();
+        }
+        this.board.setPlayer(rowCol.getKey(), rowCol.getValue(), player);
+        Cell cell = this.board.getCell(rowCol.getKey(),rowCol.getValue());
+        Move move = new Move(player,cell);
+        this.moves.add(move);
+
+        if(checkForWin()){
+            this.gameStatus = GameStatus.ENDED;
+            return;
+        } else if (checkForDraw()) {
+            this.gameStatus = GameStatus.DRAWN;
+            return;
+        }
+        this.currentPlayerIdx = (this.currentPlayerIdx +1)%(this.board.getSize()-1);
+    }
+
+
+
+    private boolean checkForWin(){
+        return false;
+    }
+
+    private boolean checkForDraw(){
+        int n=this.board.getSize();
+        return n*n == this.moves.size();
     }
 
     public static class GameBuilder {

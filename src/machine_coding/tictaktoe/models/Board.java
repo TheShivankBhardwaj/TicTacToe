@@ -19,20 +19,31 @@ public class Board {
 
     public void printBoard(){
         int n=cells.size();
-        for (int i=0;i<n;i++){
+
+        for (int i=0;i<n;i++) {
             List<Cell> row = this.cells.get(i);
-            for(int j=0;j<n;j++){
+            for (int j = 0; j < n; j++) {
                 Cell cell = row.get(j);
-                if(cell.getCellStatus().equals(CellStatus.UNOCCUPIED)){
-                    System.out.print(" _ ");
-                }
-                else {
-                    System.out.println();
-                }
+                cell.printCell();
             }
-            System.out.println("");
+            System.out.println();
         }
-        )
+    }
+    public boolean checkIfCellIsUnoccupied(int row, int col){
+        Cell cell = this.cells.get(row).get(col);
+        return cell.isUnoccupied();
     }
 
+    public void setPlayer(int row, int col,Player player){
+        Cell cell = this.cells.get(row).get(col);
+        cell.setPlayer(player);
+    }
+
+    public Cell getCell(int row, int col) {
+        return this.cells.get(row).get(col);
+    }
+
+    public int getSize(){
+        return this.cells.size();
+    }
 }
