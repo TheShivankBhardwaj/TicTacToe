@@ -6,6 +6,10 @@ import java.util.List;
 public class Board {
     private List<List<Cell>> cells;
 
+    public List<List<Cell>> getCells(){
+        return cells;
+    }
+
     public Board(int n) {
         this.cells = new ArrayList<>();
         for (int i = 0; i < n; i++) {
