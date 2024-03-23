@@ -4,7 +4,7 @@ import machine_coding.tictaktoe.models.Board;
 import machine_coding.tictaktoe.models.Cell;
 import machine_coding.tictaktoe.models.Move;
 
-public interface PlayerWonStratergy {
+public interface PlayerWonStrategy {
 
     public boolean checkForWin(Board board, Cell currentCell);
 

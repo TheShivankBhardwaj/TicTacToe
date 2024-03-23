@@ -7,35 +7,37 @@ import machine_coding.tictaktoe.models.GameStatus;
 import machine_coding.tictaktoe.models.Player;
 
 import java.util.List;
-
 public class GameController {
-    public Game createGame(List<Player> players) throws BotCountExceededException {
-        Game game = Game.getBuilder()
-                .setPlayer(players)
-                .build();
-        return game;
-    }
 
-    public GameStatus getGameStatus(Game game){
-        return game.getGameStatus();
-    }
+        public Game createGame(List<Player> players, int undoLimitPerPlayer) throws BotCountExceededException {
+            return Game.getBuilder()
+                    .setPlayer(players)
+                    .setUndoLimit(undoLimitPerPlayer)
+                    .build();
+        }
 
-    public void printBoard(Game game){
-        game.printBoard();
-    }
-    public void makeMove(Game game){
-        game.makeMove();
-    }
+        public GameStatus getGameStatus(Game game){
+            return game.getGameStatus();
+        }
 
-    public Player getCurrentPlayer (Game game){
-        return game.getCurrentPlayer();
-    }
+        public void printBoard(Game game){
+            game.printBoard();
+        }
 
-    public void undo(Game game){
-        game.undo();
-    }
+        public void makeMove(Game game){
+            game.makeMove();
+        }
 
-    public void replay(Game game)throws InvalidGameStateException {
-        game.replay();
+        public Player getCurrentPlayer(Game game){
+            return game.getCurrentPlayer();
+        }
+
+        public void undo(Game game){
+            game.undo();
+        }
+
+        public void replay(Game game) throws InvalidGameStateException {
+            game.replay();
+        }
+
     }
-}
