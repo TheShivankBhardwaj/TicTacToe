@@ -10,10 +10,12 @@ public class Cell {
     public Player getPlayer() {
         return player;
     }
+
     public void setPlayer(Player player) {
         this.player = player;
         this.cellStatus = CellStatus.OCCUPIED;
     }
+
     public int getRow() {
         return row;
     }
@@ -57,5 +59,8 @@ public class Cell {
         }
     }
 
-
+    public void removePlayer(){
+        this.player = null;
+        this.cellStatus = CellStatus.UNOCCUPIED;
+    }
 }

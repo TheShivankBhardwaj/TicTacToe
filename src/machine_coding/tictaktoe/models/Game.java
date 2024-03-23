@@ -2,11 +2,13 @@ package machine_coding.tictaktoe.models;
 
 import javafx.util.Pair;
 import machine_coding.tictaktoe.exceptions.BotCountExceededException;
+import machine_coding.tictaktoe.exceptions.InvalidGameStateException;
 import machine_coding.tictaktoe.stratergies.check_for_win.OrderOneWinningStratergy;
 import machine_coding.tictaktoe.stratergies.check_for_win.PlayerWonStratergy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Game {
     private Board board;
@@ -77,10 +79,42 @@ public class Game {
         this.currentPlayerIdx = (this.currentPlayerIdx +1)%(this.board.getSize()-1);
     }
 
+    public void undo(){
+        int prevPlayerInd = currentPlayerIdx-1;
+        if(prevPlayerInd<0){
+            prevPlayerInd = players.size()-1;
+            }
+        Player player = this.players.get(prevPlayerInd);
+        if(player instanceof HumanPlayer){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Do you want to undo? (Y/N)");
+            String input = scanner.next();
+            if(input.charAt(0)=='Y'||input.charAt(0)=='y'){
+                Move move = moves.remove(moves.size() - 1);
+                Cell cell = move.getCell();
+                cell.removePlayer();
+                this.currentPlayerIdx = prevPlayerInd;
+                winningStratergy.handleUndo(move);
+                System.out.println("We hav successfully undoed player: "+player.getName()+" 's last move");
+            }
+        }else {
+            //then do nothing, its a bot and cannot undo
+        }
+    }
 
-
-    private boolean checkForWin(){
-        return false;
+    public void replay() throws InvalidGameStateException {
+        if(gameStatus == GameStatus.IN_PROGRESS){
+            throw new InvalidGameStateException("Game is still in progress");
+        }
+        board.resetBoard();
+        int count=1;
+        for(Move move : moves){
+            Cell cell = move.getCell();
+            Player player = move.getPlayer();
+            board.setPlayer(cell.getRow(), cell.getCol(), player);
+            System.out.println("Turn Number: "+ count++ +" player "+player.getName()+" makes a move");
+            printBoard();
+        }
     }
 
     private boolean checkForDraw(){

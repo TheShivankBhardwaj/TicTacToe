@@ -2,7 +2,8 @@ package machine_coding.tictaktoe.stratergies.check_for_win;
 
 import machine_coding.tictaktoe.models.Board;
 import machine_coding.tictaktoe.models.Cell;
-import machine_coding.tictaktoe.models.Symbol;
+import machine_coding.tictaktoe.models.Move;
+import machine_coding.tictaktoe.models.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class OrderOneWinningStratergy implements PlayerWonStratergy{
     private List<HashMap<Character,Integer>> colsMap;
     private HashMap<Character,Integer> diagonalMap;
     private HashMap<Character,Integer> reverseDiagonalMap;
+    private int n;
 
     public OrderOneWinningStratergy(int n){
         rowsMap = new ArrayList<>();
@@ -24,7 +26,9 @@ public class OrderOneWinningStratergy implements PlayerWonStratergy{
             rowsMap.add(new HashMap<>());
             colsMap.add(new HashMap<>());
         }
+        this.n=n;
     }
+
 
     @Override
     public boolean checkForWin(Board board, Cell currentCell) {
@@ -61,7 +65,7 @@ public class OrderOneWinningStratergy implements PlayerWonStratergy{
             return true;
         }
 
-        if(checkIfCellIsOnReverseDiagonal(row,col, board.getSize()) && reverseDiagonalMap.get(symbol) == board.getSize() ){
+        if(checkIfCellIsOnReverseDiagonal(row,col, n) && reverseDiagonalMap.get(symbol) == board.getSize() ){
             return true;
         }
         return false;
@@ -72,5 +76,29 @@ public class OrderOneWinningStratergy implements PlayerWonStratergy{
     }
     private boolean checkIfCellIsOnReverseDiagonal(int row, int col,int n){
         return row+col == n-1;
+    }
+
+    @Override
+    public void handleUndo(Move move) {
+        Cell cell = move.getCell();
+        int row = cell.getRow();
+        int col = cell.getCol();
+
+        Player player = move.getPlayer();
+        char symbol= player.getSymbol().getSymbol();
+
+        HashMap<Character, Integer> rowMap = rowsMap.get(row);
+        rowMap.put(symbol,rowMap.get(symbol)-1);
+
+        HashMap<Character, Integer> colMap = colsMap.get(col);
+        colMap.put(symbol,colMap.get(symbol)-1);
+
+        if(checkIfCellIsOnDiagonal(row,col)){
+            diagonalMap.put(symbol, diagonalMap.get(symbol)-1);
+        }
+        if(checkIfCellIsOnReverseDiagonal(row,col,n)){
+            reverseDiagonalMap.put(symbol, reverseDiagonalMap.get(symbol)-1);
+        }
+
     }
 }

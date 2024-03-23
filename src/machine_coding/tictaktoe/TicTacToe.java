@@ -90,6 +90,8 @@ public class TicTacToe {
             gameController.printBoard(game);
 
             gameController.makeMove(game);
+            gameController.undo(game);
+
         }
         GameStatus gameStatus = gameController.getGameStatus(game);
         if(gameStatus.equals(GameStatus.ENDED)){
@@ -100,7 +102,13 @@ public class TicTacToe {
         else {
             System.out.println("This Game Has Drawn");
         }
+
         gameController.printBoard(game);
+        System.out.println("Do you want a replay for the entire game? (Y/N)");
+        String replayReply = scanner.next();
+        if(replayReply.charAt(0)=='Y'||replayReply.charAt(0)=='y'){
+            gameController.replay(game);
+        }
 
     }
 }

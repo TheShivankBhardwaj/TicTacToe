@@ -1,6 +1,7 @@
 package machine_coding.tictaktoe.controllers;
 
 import machine_coding.tictaktoe.exceptions.BotCountExceededException;
+import machine_coding.tictaktoe.exceptions.InvalidGameStateException;
 import machine_coding.tictaktoe.models.Game;
 import machine_coding.tictaktoe.models.GameStatus;
 import machine_coding.tictaktoe.models.Player;
@@ -28,5 +29,13 @@ public class GameController {
 
     public Player getCurrentPlayer (Game game){
         return game.getCurrentPlayer();
+    }
+
+    public void undo(Game game){
+        game.undo();
+    }
+
+    public void replay(Game game)throws InvalidGameStateException {
+        game.replay();
     }
 }
